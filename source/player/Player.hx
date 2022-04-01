@@ -11,20 +11,27 @@ class Player extends FlxSprite
 	static var GRAVITY:Float = 500;
 
 	var playerNum:Int;
+	var inAir:Bool;
 
-	public function new(x:Float = 0, y:Float = 0, playerNum:Int = -1)
+	public function new(x:Float = 0, y:Float = 0, playerNum:Int = -1, color:FlxColor)
 	{
 		super(x, y);
-		makeGraphic(16, 16, FlxColor.RED);
+		makeGraphic(16, 16, color);
 		this.playerNum = playerNum;
 		drag.x = FRICTION;
 		acceleration.y = GRAVITY;
+		solid = true;
+		inAir = false;
 	}
 
 	override public function update(elapsed:Float)
 	{
-		super.update(elapsed);
+		if (!isOnScreen())
+		{
+			kill();
+		}
 		updateMovement();
+		super.update(elapsed);
 	}
 
 	function updateMovement()
@@ -71,9 +78,15 @@ class Player extends FlxSprite
 			velocity.x = SPEED;
 		}
 
-		if (up)
+		if (up && !inAir)
 		{
-			velocity.y = -300;
+			velocity.y = -355;
+			inAir = true;
 		}
+	}
+
+	public function setOnGround()
+	{
+		inAir = false;
 	}
 }

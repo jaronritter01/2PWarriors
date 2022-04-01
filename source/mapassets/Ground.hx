@@ -11,5 +11,6 @@ class Ground extends FlxSprite
 		super(x, y);
 		makeGraphic(width, height, color);
 		immovable = true;
+		solid = true;
 	}
 }
