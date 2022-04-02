@@ -50,8 +50,68 @@ class PlayState extends FlxState
 		FlxG.overlap(player1, bullets, handleShot);
 		FlxG.overlap(player2, bullets, handleShot);
 		shootGun();
+		melee();
 		handleRespawn();
 		super.update(elapsed);
+	}
+
+	public function melee()
+	{
+		// player one rightside melee
+		if ((player2.x - 8 < player1.x + (player1.width - 1))
+			&& player1.x + (player1.width - 1) < player2.x
+				&& player1.facing == RIGHT
+				&& (player1.y - player2.y > -10 && player1.y - player2.y < 10)
+				&& FlxG.keys.justPressed.X)
+		{
+			player2.velocity.x = 250;
+			if (player2.getHasGun())
+			{
+				respawnGun();
+			}
+		}
+
+		// player 2 right side melee
+		if ((player1.x - 8 < player2.x + (player2.width - 1))
+			&& player2.x + (player2.width - 1) < player1.x
+				&& player2.facing == RIGHT
+				&& (player2.y - player1.y > -10 && player2.y - player1.y < 10)
+				&& FlxG.keys.justPressed.M)
+		{
+			player1.velocity.x = 250;
+			if (player1.getHasGun())
+			{
+				respawnGun();
+			}
+		}
+
+		// player 1 leftside melee
+		if ((player1.x - 8 < player2.x + (player2.width - 1))
+			&& player2.x + (player2.width - 1) < player1.x
+				&& player1.facing == LEFT
+				&& (player2.y - player1.y > -10 && player2.y - player1.y < 10)
+				&& FlxG.keys.justPressed.X)
+		{
+			player2.velocity.x = -250;
+			if (player2.getHasGun())
+			{
+				respawnGun();
+			}
+		}
+
+		// player 2 left side melee
+		if ((player2.x - 8 < player1.x + (player1.width - 1))
+			&& player1.x + (player1.width - 1) < player2.x
+				&& player2.facing == LEFT
+				&& (player1.y - player2.y > -10 && player1.y - player2.y < 10)
+				&& FlxG.keys.justPressed.M)
+		{
+			player1.velocity.x = -250;
+			if (player1.getHasGun())
+			{
+				respawnGun();
+			}
+		}
 	}
 
 	public function createLives()
