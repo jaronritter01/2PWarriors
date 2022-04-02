@@ -122,12 +122,12 @@ class PlayState extends FlxState
 			newBullet.y = player1.y + 3;
 			if (player1.facing == LEFT)
 			{
-				newBullet.x = player1.x - 4;
+				newBullet.x = player1.x - 7;
 				newBullet.velocity.x = -BULLETSPEED;
 			}
 			else
 			{
-				newBullet.x = player1.x + (player1.width);
+				newBullet.x = player1.x + (player1.width + 4);
 				newBullet.velocity.x = BULLETSPEED;
 			}
 			newBullet.revive();
@@ -139,12 +139,12 @@ class PlayState extends FlxState
 			newBullet.y = player2.y + 3;
 			if (player2.facing == LEFT)
 			{
-				newBullet.x = player2.x - 4;
+				newBullet.x = player2.x - 7;
 				newBullet.velocity.x = -BULLETSPEED;
 			}
 			else
 			{
-				newBullet.x = player2.x + (player2.width);
+				newBullet.x = player2.x + (player2.width + 4);
 				newBullet.velocity.x = BULLETSPEED;
 			}
 			newBullet.revive();
