@@ -1,6 +1,5 @@
 package player;
 
-import pickups.Bullets.Bullet;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
@@ -19,6 +18,7 @@ class Player extends FlxSprite
 	public function new(x:Float = 0, y:Float = 0, playerNum:Int = -1, color:FlxColor, state:PlayState)
 	{
 		super(x, y);
+		FlxG.mouse.visible = false;
 		makeGraphic(16, 16, color);
 		this.playerNum = playerNum;
 		drag.x = FRICTION;
@@ -27,14 +27,11 @@ class Player extends FlxSprite
 		solid = true;
 		inAir = false;
 		hasGun = false;
+		health = 2;
 	}
 
 	override public function update(elapsed:Float)
 	{
-		if (!isOnScreen())
-		{
-			kill();
-		}
 		updateMovement();
 		super.update(elapsed);
 	}
@@ -90,10 +87,6 @@ class Player extends FlxSprite
 			velocity.y = -355;
 			inAir = true;
 		}
-		if (hasGun && shoot)
-		{
-			shootGun();
-		}
 	}
 
 	public function setOnGround()
@@ -110,6 +103,4 @@ class Player extends FlxSprite
 	{
 		return hasGun;
 	}
-
-	function shootGun() {}
 }

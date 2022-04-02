@@ -42,7 +42,10 @@ class PlayState extends FlxState
 		FlxG.collide(player1, groundPieces);
 		FlxG.collide(player2, groundPieces);
 		FlxG.collide(player1, player2);
+		FlxG.overlap(player1, bullets, handleShot);
+		FlxG.overlap(player2, bullets, handleShot);
 		shootGun();
+		handleRespawn();
 		super.update(elapsed);
 	}
 
@@ -91,12 +94,12 @@ class PlayState extends FlxState
 			newBullet.y = player1.y + 3;
 			if (player1.facing == LEFT)
 			{
-				newBullet.x = player1.x - 3;
+				newBullet.x = player1.x - (player1.width + 10);
 				newBullet.velocity.x = -300;
 			}
 			else
 			{
-				newBullet.x = player1.x + 3;
+				newBullet.x = player1.x + (player1.width + 10);
 				newBullet.velocity.x = 300;
 			}
 			newBullet.revive();
@@ -108,15 +111,43 @@ class PlayState extends FlxState
 			newBullet.y = player2.y + 3;
 			if (player2.facing == LEFT)
 			{
-				newBullet.x = player2.x - 3;
+				newBullet.x = player2.x - (player2.width + 10);
 				newBullet.velocity.x = -300;
 			}
 			else
 			{
-				newBullet.x = player2.x + 3;
+				newBullet.x = player2.x + (player2.width + 10);
 				newBullet.velocity.x = 300;
 			}
 			newBullet.revive();
+		}
+	}
+
+	public function handleShot(player:Player, bullet:Bullet)
+	{
+		if (bullet.x < player.x + player.width / 3)
+		{
+			player.velocity.x += 300;
+		}
+		else
+		{
+			player.velocity.x -= 300;
+		}
+		bullet.kill();
+	};
+
+	public function handleRespawn()
+	{
+		if (!player1.isOnScreen() && player1.health > 0)
+		{
+			player1.hurt(1);
+			player1.reset(42, 20);
+		}
+
+		if (!player2.isOnScreen() && player2.health > 0)
+		{
+			player2.hurt(1);
+			player2.reset(FlxG.width - 55, 20);
 		}
 	}
 }
