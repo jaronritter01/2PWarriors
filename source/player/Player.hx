@@ -1,5 +1,6 @@
 package player;
 
+import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
@@ -14,11 +15,12 @@ class Player extends FlxSprite
 	var inAir:Bool;
 	var hasGun:Bool;
 	var playState:PlayState;
+	var lives:FlxTypedGroup<FlxSprite>;
 
 	public function new(x:Float = 0, y:Float = 0, playerNum:Int = -1, color:FlxColor, state:PlayState)
 	{
 		super(x, y);
-		FlxG.mouse.visible = false;
+		lives = new FlxTypedGroup<FlxSprite>();
 		makeGraphic(16, 16, color);
 		this.playerNum = playerNum;
 		drag.x = FRICTION;
@@ -27,7 +29,7 @@ class Player extends FlxSprite
 		solid = true;
 		inAir = false;
 		hasGun = false;
-		health = 2;
+		health = 3;
 	}
 
 	override public function update(elapsed:Float)
@@ -52,8 +54,6 @@ class Player extends FlxSprite
 			down = FlxG.keys.pressed.S;
 			left = FlxG.keys.pressed.A;
 			right = FlxG.keys.pressed.D;
-			hit = FlxG.keys.justPressed.V;
-			shoot = FlxG.keys.justPressed.C;
 		}
 		else
 		{
@@ -62,8 +62,6 @@ class Player extends FlxSprite
 			down = FlxG.keys.pressed.K;
 			left = FlxG.keys.pressed.J;
 			right = FlxG.keys.pressed.L;
-			hit = FlxG.keys.justPressed.B;
-			shoot = FlxG.keys.justPressed.N;
 		}
 
 		// this is used to cancel out the players movements in the opposite direction
@@ -97,6 +95,11 @@ class Player extends FlxSprite
 	public function setHasGun()
 	{
 		hasGun = true;
+	}
+
+	public function setLostGun()
+	{
+		hasGun = false;
 	}
 
 	public function getHasGun()
