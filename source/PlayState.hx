@@ -1,5 +1,7 @@
 package;
 
+import pickups.Bullets.Bullet;
+import pickups.Gun;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -12,26 +14,35 @@ class PlayState extends FlxState
 	var player1:Player;
 	var player2:Player;
 	var groundPieces:FlxTypedGroup<Ground>;
+	var gun:Gun;
+	var bullets:FlxTypedGroup<Bullet>;
 
 	override public function create()
 	{
 		super.create();
-		player1 = new Player(42, 20, 1, FlxColor.RED);
-		player2 = new Player(FlxG.width - 55, 20, 2, FlxColor.BLUE);
+		player1 = new Player(42, 20, 1, FlxColor.RED, this);
+		player2 = new Player(FlxG.width - 55, 20, 2, FlxColor.BLUE, this);
+		gun = new Gun(FlxG.width / 2, 0);
+		createBullets();
 
 		buildMap();
 		add(player1);
 		add(player2);
 		add(groundPieces);
+		add(gun);
 	}
 
 	override public function update(elapsed:Float)
 	{
 		FlxG.overlap(player1, groundPieces, handleInAir);
 		FlxG.overlap(player2, groundPieces, handleInAir);
+		FlxG.collide(groundPieces, gun);
+		FlxG.overlap(player1, gun, Gun.pickedUp);
+		FlxG.overlap(player2, gun, Gun.pickedUp);
 		FlxG.collide(player1, groundPieces);
 		FlxG.collide(player2, groundPieces);
 		FlxG.collide(player1, player2);
+		shootGun();
 		super.update(elapsed);
 	}
 
@@ -57,5 +68,55 @@ class PlayState extends FlxState
 		groundPieces.add(groundPiece4);
 		groundPieces.add(groundPiece5);
 		groundPieces.add(groundPiece6);
+	}
+
+	function createBullets()
+	{
+		// adds the bulelts to the state
+		bullets = new FlxTypedGroup<Bullet>();
+		for (i in 0...100)
+		{
+			var bullet = new Bullet(0, 0);
+			bullet.kill();
+			bullets.add(bullet);
+		}
+		add(bullets);
+	}
+
+	function shootGun()
+	{
+		if (player1.getHasGun() && FlxG.keys.justPressed.C)
+		{
+			var newBullet = bullets.recycle();
+			newBullet.y = player1.y + 3;
+			if (player1.facing == LEFT)
+			{
+				newBullet.x = player1.x - 3;
+				newBullet.velocity.x = -300;
+			}
+			else
+			{
+				newBullet.x = player1.x + 3;
+				newBullet.velocity.x = 300;
+			}
+			newBullet.revive();
+		}
+
+		if (player2.getHasGun() && FlxG.keys.justPressed.N)
+		{
+			var newBullet = bullets.recycle();
+			newBullet.y = player2.y + 3;
+			if (player2.facing == LEFT)
+			{
+				newBullet.x = player2.x - 3;
+				newBullet.velocity.x = -300;
+			}
+			else
+			{
+				newBullet.x = player2.x + 3;
+				newBullet.velocity.x = 300;
+			}
+			newBullet.revive();
+		}
 	}
 }

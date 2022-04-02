@@ -1,5 +1,6 @@
 package player;
 
+import pickups.Bullets.Bullet;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
@@ -12,16 +13,20 @@ class Player extends FlxSprite
 
 	var playerNum:Int;
 	var inAir:Bool;
+	var hasGun:Bool;
+	var playState:PlayState;
 
-	public function new(x:Float = 0, y:Float = 0, playerNum:Int = -1, color:FlxColor)
+	public function new(x:Float = 0, y:Float = 0, playerNum:Int = -1, color:FlxColor, state:PlayState)
 	{
 		super(x, y);
 		makeGraphic(16, 16, color);
 		this.playerNum = playerNum;
 		drag.x = FRICTION;
 		acceleration.y = GRAVITY;
+		playState = state;
 		solid = true;
 		inAir = false;
+		hasGun = false;
 	}
 
 	override public function update(elapsed:Float)
@@ -50,8 +55,8 @@ class Player extends FlxSprite
 			down = FlxG.keys.pressed.S;
 			left = FlxG.keys.pressed.A;
 			right = FlxG.keys.pressed.D;
-			hit = FlxG.keys.pressed.V;
-			shoot = FlxG.keys.pressed.C;
+			hit = FlxG.keys.justPressed.V;
+			shoot = FlxG.keys.justPressed.C;
 		}
 		else
 		{
@@ -60,8 +65,8 @@ class Player extends FlxSprite
 			down = FlxG.keys.pressed.K;
 			left = FlxG.keys.pressed.J;
 			right = FlxG.keys.pressed.L;
-			hit = FlxG.keys.pressed.B;
-			shoot = FlxG.keys.pressed.N;
+			hit = FlxG.keys.justPressed.B;
+			shoot = FlxG.keys.justPressed.N;
 		}
 
 		// this is used to cancel out the players movements in the opposite direction
@@ -70,11 +75,13 @@ class Player extends FlxSprite
 
 		if (left)
 		{
+			facing = LEFT;
 			velocity.x = -SPEED;
 		}
 
 		if (right)
 		{
+			facing = RIGHT;
 			velocity.x = SPEED;
 		}
 
@@ -83,10 +90,26 @@ class Player extends FlxSprite
 			velocity.y = -355;
 			inAir = true;
 		}
+		if (hasGun && shoot)
+		{
+			shootGun();
+		}
 	}
 
 	public function setOnGround()
 	{
 		inAir = false;
 	}
+
+	public function setHasGun()
+	{
+		hasGun = true;
+	}
+
+	public function getHasGun()
+	{
+		return hasGun;
+	}
+
+	function shootGun() {}
 }
