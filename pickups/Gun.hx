@@ -6,7 +6,7 @@ import flixel.FlxSprite;
 
 class Gun extends FlxSprite
 {
-	static var GRAVITY:Float = 500;
+	static var GRAVITY:Float = 700;
 
 	public function new(x:Float, y:Float)
 	{

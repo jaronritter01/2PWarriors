@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxSprite;
 import pickups.Bullets.Bullet;
 import pickups.Gun;
 import flixel.FlxG;
@@ -12,7 +13,9 @@ import player.Player;
 class PlayState extends FlxState
 {
 	var player1:Player;
+	var player1Lives:FlxTypedGroup<FlxSprite>;
 	var player2:Player;
+	var player2Lives:FlxTypedGroup<FlxSprite>;
 	var groundPieces:FlxTypedGroup<Ground>;
 	var gun:Gun;
 	var bullets:FlxTypedGroup<Bullet>;
@@ -20,12 +23,14 @@ class PlayState extends FlxState
 	override public function create()
 	{
 		super.create();
+		FlxG.mouse.visible = false;
 		player1 = new Player(42, 20, 1, FlxColor.RED, this);
 		player2 = new Player(FlxG.width - 55, 20, 2, FlxColor.BLUE, this);
 		gun = new Gun(FlxG.width / 2, 0);
 		createBullets();
 
 		buildMap();
+		createLives();
 		add(player1);
 		add(player2);
 		add(groundPieces);
@@ -47,6 +52,28 @@ class PlayState extends FlxState
 		shootGun();
 		handleRespawn();
 		super.update(elapsed);
+	}
+
+	public function createLives()
+	{
+		player1Lives = new FlxTypedGroup<FlxSprite>();
+		var sprite = new FlxSprite(20, 20, AssetPaths.lives__png);
+		var sprite1 = new FlxSprite(40, 20, AssetPaths.lives__png);
+		var sprite2 = new FlxSprite(60, 20, AssetPaths.lives__png);
+		player1Lives.add(sprite2);
+		player1Lives.add(sprite1);
+		player1Lives.add(sprite);
+
+		player2Lives = new FlxTypedGroup<FlxSprite>();
+		var sprite3 = new FlxSprite(FlxG.width - 60, 20, AssetPaths.lives__png);
+		var sprite4 = new FlxSprite(FlxG.width - 40, 20, AssetPaths.lives__png);
+		var sprite5 = new FlxSprite(FlxG.width - 20, 20, AssetPaths.lives__png);
+		player2Lives.add(sprite3);
+		player2Lives.add(sprite4);
+		player2Lives.add(sprite5);
+
+		add(player1Lives);
+		add(player2Lives);
 	}
 
 	public function handleInAir(player:Player, ground:FlxTypedGroup<Ground>)
@@ -88,19 +115,20 @@ class PlayState extends FlxState
 
 	function shootGun()
 	{
+		final BULLETSPEED = 500;
 		if (player1.getHasGun() && FlxG.keys.justPressed.C)
 		{
 			var newBullet = bullets.recycle();
 			newBullet.y = player1.y + 3;
 			if (player1.facing == LEFT)
 			{
-				newBullet.x = player1.x - (player1.width + 10);
-				newBullet.velocity.x = -300;
+				newBullet.x = player1.x - 4;
+				newBullet.velocity.x = -BULLETSPEED;
 			}
 			else
 			{
-				newBullet.x = player1.x + (player1.width + 10);
-				newBullet.velocity.x = 300;
+				newBullet.x = player1.x + (player1.width);
+				newBullet.velocity.x = BULLETSPEED;
 			}
 			newBullet.revive();
 		}
@@ -111,13 +139,13 @@ class PlayState extends FlxState
 			newBullet.y = player2.y + 3;
 			if (player2.facing == LEFT)
 			{
-				newBullet.x = player2.x - (player2.width + 10);
-				newBullet.velocity.x = -300;
+				newBullet.x = player2.x - 4;
+				newBullet.velocity.x = -BULLETSPEED;
 			}
 			else
 			{
-				newBullet.x = player2.x + (player2.width + 10);
-				newBullet.velocity.x = 300;
+				newBullet.x = player2.x + (player2.width);
+				newBullet.velocity.x = BULLETSPEED;
 			}
 			newBullet.revive();
 		}
@@ -141,13 +169,35 @@ class PlayState extends FlxState
 		if (!player1.isOnScreen() && player1.health > 0)
 		{
 			player1.hurt(1);
+			var life = player1Lives.getFirstAlive();
+			life.kill();
+			respawnGun();
 			player1.reset(42, 20);
 		}
 
 		if (!player2.isOnScreen() && player2.health > 0)
 		{
 			player2.hurt(1);
+			var life = player2Lives.getFirstAlive();
+			life.kill();
+			respawnGun();
 			player2.reset(FlxG.width - 55, 20);
 		}
+	}
+
+	public function respawnGun()
+	{
+		for (i in 0...100)
+		{
+			var bullet = bullets.getFirstAlive();
+			if (bullet != null)
+			{
+				bullet.kill();
+			}
+		}
+		player1.setLostGun();
+		player2.setLostGun();
+		gun.reset(gun.x, 0);
+		gun.revive();
 	}
 }
