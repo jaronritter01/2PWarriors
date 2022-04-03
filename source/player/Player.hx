@@ -1,5 +1,6 @@
 package player;
 
+import flixel.util.FlxTimer;
 import flixel.system.FlxSound;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.FlxG;
@@ -19,6 +20,12 @@ class Player extends FlxSprite
 	var lives:FlxTypedGroup<FlxSprite>;
 	var jumpNoise:FlxSound;
 
+	public var isStunned:Bool;
+	public var up:Bool;
+	public var down:Bool;
+	public var left:Bool;
+	public var right:Bool;
+
 	public function new(x:Float = 0, y:Float = 0, playerNum:Int = -1, color:FlxColor, state:PlayState)
 	{
 		super(x, y);
@@ -33,6 +40,7 @@ class Player extends FlxSprite
 		inAir = false;
 		hasGun = false;
 		health = 3;
+		isStunned = false;
 	}
 
 	override public function update(elapsed:Float)
@@ -43,51 +51,53 @@ class Player extends FlxSprite
 
 	function updateMovement()
 	{
-		var up:Bool = false;
-		var down:Bool = false;
-		var left:Bool = false;
-		var right:Bool = false;
-		var hit:Bool = false;
-		var shoot:Bool = false;
+		up = false;
+		down = false;
+		left = false;
+		right = false;
 
-		if (playerNum == 1)
+		// cant move if stunned
+		if (!isStunned)
 		{
-			// this will handle player ones movement and actions
-			up = FlxG.keys.justPressed.W;
-			down = FlxG.keys.pressed.S;
-			left = FlxG.keys.pressed.A;
-			right = FlxG.keys.pressed.D;
-		}
-		else
-		{
-			// this handles player two's actions and movements
-			up = FlxG.keys.justPressed.I;
-			down = FlxG.keys.pressed.K;
-			left = FlxG.keys.pressed.J;
-			right = FlxG.keys.pressed.L;
-		}
+			if (playerNum == 1)
+			{
+				// this will handle player ones movement and actions
+				up = FlxG.keys.justPressed.W;
+				down = FlxG.keys.pressed.S;
+				left = FlxG.keys.pressed.A;
+				right = FlxG.keys.pressed.D;
+			}
+			else
+			{
+				// this handles player two's actions and movements
+				up = FlxG.keys.justPressed.I;
+				down = FlxG.keys.pressed.K;
+				left = FlxG.keys.pressed.J;
+				right = FlxG.keys.pressed.L;
+			}
 
-		// this is used to cancel out the players movements in the opposite direction
-		if (left && right)
-			left = right = false;
+			// this is used to cancel out the players movements in the opposite direction
+			if (left && right)
+				left = right = false;
 
-		if (left)
-		{
-			facing = LEFT;
-			velocity.x = -SPEED;
-		}
+			if (left)
+			{
+				facing = LEFT;
+				velocity.x = -SPEED;
+			}
 
-		if (right)
-		{
-			facing = RIGHT;
-			velocity.x = SPEED;
-		}
+			if (right)
+			{
+				facing = RIGHT;
+				velocity.x = SPEED;
+			}
 
-		if (up && !inAir)
-		{
-			jumpNoise.play();
-			velocity.y = -355;
-			inAir = true;
+			if (up && !inAir)
+			{
+				jumpNoise.play();
+				velocity.y = -355;
+				inAir = true;
+			}
 		}
 	}
 
@@ -109,5 +119,15 @@ class Player extends FlxSprite
 	public function getHasGun()
 	{
 		return hasGun;
+	}
+
+	public function stun()
+	{
+		isStunned = true;
+	}
+
+	public function removeStun()
+	{
+		isStunned = false;
 	}
 }

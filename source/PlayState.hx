@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxTimer;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.FlxSprite;
@@ -25,12 +26,17 @@ class PlayState extends FlxState
 	var gunshotNoise:FlxSound;
 	var deathNoise:FlxSound;
 	var hitNoise:FlxSound;
+	var player1Timer:FlxTimer;
+	var player2Timer:FlxTimer;
 
 	override public function create()
 	{
 		super.create();
 		FlxG.sound.playMusic(AssetPaths.BeepBox_Song__wav, .6, true);
-
+		player1Timer = new FlxTimer();
+		player1Timer.loops = 1;
+		player2Timer = new FlxTimer();
+		player2Timer.loops = 1;
 		gunshotNoise = FlxG.sound.load(AssetPaths.shot__wav, 1, false);
 		deathNoise = FlxG.sound.load(AssetPaths.death__wav, .7, false);
 		hitNoise = FlxG.sound.load(AssetPaths.Hit_Hurt__wav, .7, false);
@@ -77,6 +83,19 @@ class PlayState extends FlxState
 		super.update(elapsed);
 	}
 
+	public function unStun(timer:FlxTimer)
+	{
+		if (player1.isStunned)
+		{
+			player1.removeStun();
+		}
+
+		if (player2.isStunned)
+		{
+			player2.removeStun();
+		}
+	}
+
 	public function goToDeathScreen()
 	{
 		if (player1.health <= 0)
@@ -117,7 +136,8 @@ class PlayState extends FlxState
 				&& FlxG.keys.justPressed.X)
 		{
 			hitNoise.play();
-			player2.x += 20;
+			player2.stun();
+			player2.velocity.x = 250;
 			if (player2.getHasGun())
 			{
 				respawnGun();
@@ -132,7 +152,8 @@ class PlayState extends FlxState
 				&& FlxG.keys.justPressed.M)
 		{
 			hitNoise.play();
-			player1.x += 20;
+			player1.stun();
+			player1.velocity.x = 250;
 			if (player1.getHasGun())
 			{
 				respawnGun();
@@ -147,7 +168,8 @@ class PlayState extends FlxState
 				&& FlxG.keys.justPressed.X)
 		{
 			hitNoise.play();
-			player2.x -= 20;
+			player2.stun();
+			player2.velocity.x = -250;
 			if (player2.getHasGun())
 			{
 				respawnGun();
@@ -162,7 +184,8 @@ class PlayState extends FlxState
 				&& FlxG.keys.justPressed.M)
 		{
 			hitNoise.play();
-			player1.x -= 20;
+			player1.stun();
+			player1.velocity.x = -250;
 			if (player1.getHasGun())
 			{
 				respawnGun();
@@ -280,11 +303,22 @@ class PlayState extends FlxState
 		hitNoise.play();
 		if (bullet.x < player.x + player.width / 3)
 		{
-			player.x += 30;
+			player.stun();
+			player.velocity.x = 300;
 		}
 		else
 		{
-			player.x -= 30;
+			player.stun();
+			player.velocity.x = -300;
+		}
+		if (player1.isStunned)
+		{
+			player1Timer.start(.7, unStun, 1);
+		}
+
+		if (player2.isStunned)
+		{
+			player2Timer.start(.7, unStun, 1);
 		}
 		bullet.kill();
 	};
