@@ -1,5 +1,6 @@
 package player;
 
+import flixel.system.FlxSound;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -7,7 +8,7 @@ import flixel.util.FlxColor;
 
 class Player extends FlxSprite
 {
-	static var SPEED:Float = 200;
+	public static var SPEED:Float = 200;
 	static var FRICTION:Float = 1600;
 	static var GRAVITY:Float = 500;
 
@@ -16,10 +17,12 @@ class Player extends FlxSprite
 	var hasGun:Bool;
 	var playState:PlayState;
 	var lives:FlxTypedGroup<FlxSprite>;
+	var jumpNoise:FlxSound;
 
 	public function new(x:Float = 0, y:Float = 0, playerNum:Int = -1, color:FlxColor, state:PlayState)
 	{
 		super(x, y);
+		jumpNoise = FlxG.sound.load(AssetPaths.Jump__wav, 1, false);
 		lives = new FlxTypedGroup<FlxSprite>();
 		makeGraphic(16, 16, color);
 		this.playerNum = playerNum;
@@ -82,6 +85,7 @@ class Player extends FlxSprite
 
 		if (up && !inAir)
 		{
+			jumpNoise.play();
 			velocity.y = -355;
 			inAir = true;
 		}

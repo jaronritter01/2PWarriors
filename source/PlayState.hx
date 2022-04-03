@@ -1,5 +1,7 @@
 package;
 
+import flixel.system.FlxSound;
+import flixel.text.FlxText;
 import flixel.FlxSprite;
 import pickups.Bullets.Bullet;
 import pickups.Gun;
@@ -19,14 +21,33 @@ class PlayState extends FlxState
 	var groundPieces:FlxTypedGroup<Ground>;
 	var gun:Gun;
 	var bullets:FlxTypedGroup<Bullet>;
+	var background:FlxSprite;
+	var gunshotNoise:FlxSound;
+	var deathNoise:FlxSound;
+	var hitNoise:FlxSound;
 
 	override public function create()
 	{
 		super.create();
+		FlxG.sound.playMusic(AssetPaths.BeepBox_Song__wav, .6, true);
+
+		gunshotNoise = FlxG.sound.load(AssetPaths.shot__wav, 1, false);
+		deathNoise = FlxG.sound.load(AssetPaths.death__wav, .7, false);
+		hitNoise = FlxG.sound.load(AssetPaths.Hit_Hurt__wav, .7, false);
+		background = new FlxSprite();
+		background.loadGraphic(AssetPaths.backgroundBig__png, false, FlxG.width, FlxG.height);
+		add(background);
 		FlxG.mouse.visible = false;
 		player1 = new Player(42, 20, 1, FlxColor.RED, this);
+		player1.loadGraphic(AssetPaths.bluepixelknightwalking__png, false, 60, 30);
+		player1.setFacingFlip(LEFT, false, false);
+		player1.setFacingFlip(RIGHT, true, false);
 		player2 = new Player(FlxG.width - 55, 20, 2, FlxColor.BLUE, this);
+		player2.loadGraphic(AssetPaths.redpixelknightstanding__png, false, 45, 36);
+		player2.setFacingFlip(LEFT, false, false);
+		player2.setFacingFlip(RIGHT, true, false);
 		gun = new Gun(FlxG.width / 2, 0);
+		gun.loadGraphic(AssetPaths.gunbase__png, false, 20, 10);
 		createBullets();
 
 		buildMap();
@@ -52,7 +73,38 @@ class PlayState extends FlxState
 		shootGun();
 		melee();
 		handleRespawn();
+		goToDeathScreen();
 		super.update(elapsed);
+	}
+
+	public function goToDeathScreen()
+	{
+		if (player1.health <= 0)
+		{
+			var winText = new FlxText(0, 0, -1, "Player2 Wins!", 30);
+			winText.screenCenter();
+			add(winText);
+
+			var timer = haxe.Timer.delay(function()
+			{
+				FlxG.sound.music.stop();
+				FlxG.mouse.visible = true;
+			}, 5000);
+		}
+
+		if (player2.health <= 0)
+		{
+			var winText = new FlxText(0, 0, -1, "Player1 Wins!", 30);
+			winText.screenCenter();
+			add(winText);
+
+			var timer = haxe.Timer.delay(function()
+			{
+				FlxG.sound.music.stop();
+				FlxG.mouse.visible = true;
+				FlxG.switchState(new EndState());
+			}, 5000);
+		}
 	}
 
 	public function melee()
@@ -64,7 +116,8 @@ class PlayState extends FlxState
 				&& (player1.y - player2.y > -10 && player1.y - player2.y < 10)
 				&& FlxG.keys.justPressed.X)
 		{
-			player2.velocity.x = 250;
+			hitNoise.play();
+			player2.x += 20;
 			if (player2.getHasGun())
 			{
 				respawnGun();
@@ -78,7 +131,8 @@ class PlayState extends FlxState
 				&& (player2.y - player1.y > -10 && player2.y - player1.y < 10)
 				&& FlxG.keys.justPressed.M)
 		{
-			player1.velocity.x = 250;
+			hitNoise.play();
+			player1.x += 20;
 			if (player1.getHasGun())
 			{
 				respawnGun();
@@ -92,7 +146,8 @@ class PlayState extends FlxState
 				&& (player2.y - player1.y > -10 && player2.y - player1.y < 10)
 				&& FlxG.keys.justPressed.X)
 		{
-			player2.velocity.x = -250;
+			hitNoise.play();
+			player2.x -= 20;
 			if (player2.getHasGun())
 			{
 				respawnGun();
@@ -106,7 +161,8 @@ class PlayState extends FlxState
 				&& (player1.y - player2.y > -10 && player1.y - player2.y < 10)
 				&& FlxG.keys.justPressed.M)
 		{
-			player1.velocity.x = -250;
+			hitNoise.play();
+			player1.x -= 20;
 			if (player1.getHasGun())
 			{
 				respawnGun();
@@ -143,14 +199,20 @@ class PlayState extends FlxState
 
 	public function buildMap()
 	{
-		var groundPiece1 = new Ground(0, FlxG.height - 25, 12, 200, FlxColor.WHITE);
+		var groundPiece1 = new Ground(0, FlxG.height - 25);
+		groundPiece1.loadGraphic(AssetPaths.ground200x20__png, false, 200, 20);
 		groundPiece1.screenCenter(X);
-		var groundPiece2 = new Ground(0, 230, 12, 100, FlxColor.WHITE);
+		var groundPiece2 = new Ground(0, 230);
+		groundPiece2.loadGraphic(AssetPaths.ground100x20__png, false, 100, 20);
 		groundPiece2.screenCenter(X);
-		var groundPiece3 = new Ground(35, 185, 12, 80, FlxColor.WHITE);
-		var groundPiece4 = new Ground(FlxG.width - 115, 185, 12, 80, FlxColor.WHITE);
-		var groundPiece5 = new Ground(50, 340, 12, 80, FlxColor.WHITE);
-		var groundPiece6 = new Ground(FlxG.width - 130, 340, 12, 80, FlxColor.WHITE);
+		var groundPiece3 = new Ground(35, 185);
+		groundPiece3.loadGraphic(AssetPaths.ground80x20__png, false, 80, 20);
+		var groundPiece4 = new Ground(FlxG.width - 115, 185);
+		groundPiece4.loadGraphic(AssetPaths.ground80x20__png, false, 80, 20);
+		var groundPiece5 = new Ground(50, 340);
+		groundPiece5.loadGraphic(AssetPaths.ground80x20__png, false, 80, 20);
+		var groundPiece6 = new Ground(FlxG.width - 130, 340);
+		groundPiece6.loadGraphic(AssetPaths.ground80x20__png, false, 80, 20);
 		groundPieces = new FlxTypedGroup<Ground>();
 		groundPieces.add(groundPiece1);
 		groundPieces.add(groundPiece2);
@@ -178,6 +240,7 @@ class PlayState extends FlxState
 		final BULLETSPEED = 500;
 		if (player1.getHasGun() && FlxG.keys.justPressed.C)
 		{
+			gunshotNoise.play();
 			var newBullet = bullets.recycle();
 			newBullet.y = player1.y + 3;
 			if (player1.facing == LEFT)
@@ -195,8 +258,9 @@ class PlayState extends FlxState
 
 		if (player2.getHasGun() && FlxG.keys.justPressed.N)
 		{
+			gunshotNoise.play();
 			var newBullet = bullets.recycle();
-			newBullet.y = player2.y + 3;
+			newBullet.y = player2.y + 12;
 			if (player2.facing == LEFT)
 			{
 				newBullet.x = player2.x - 7;
@@ -213,13 +277,14 @@ class PlayState extends FlxState
 
 	public function handleShot(player:Player, bullet:Bullet)
 	{
+		hitNoise.play();
 		if (bullet.x < player.x + player.width / 3)
 		{
-			player.velocity.x += 300;
+			player.x += 30;
 		}
 		else
 		{
-			player.velocity.x -= 300;
+			player.x -= 30;
 		}
 		bullet.kill();
 	};
@@ -228,6 +293,7 @@ class PlayState extends FlxState
 	{
 		if (!player1.isOnScreen() && player1.health > 0)
 		{
+			deathNoise.play();
 			player1.hurt(1);
 			var life = player1Lives.getFirstAlive();
 			life.kill();
@@ -235,12 +301,22 @@ class PlayState extends FlxState
 			player1.reset(42, 20);
 		}
 
+		if (!player1.isOnScreen() && player2.health > 0)
+		{
+			player1.reset(FlxG.width - 55, 20);
+		}
+
 		if (!player2.isOnScreen() && player2.health > 0)
 		{
+			deathNoise.play();
 			player2.hurt(1);
 			var life = player2Lives.getFirstAlive();
 			life.kill();
 			respawnGun();
+		}
+
+		if (!player2.isOnScreen() && player2.health > 0)
+		{
 			player2.reset(FlxG.width - 55, 20);
 		}
 	}

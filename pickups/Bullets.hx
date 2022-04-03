@@ -8,7 +8,7 @@ class Bullet extends FlxSprite
 	public function new(x:Float, y:Float)
 	{
 		super(x, y);
-		makeGraphic(3, 5, FlxColor.ORANGE);
+		makeGraphic(5, 3, FlxColor.ORANGE);
 	}
 
 	override public function update(elapsed:Float)

@@ -6,10 +6,9 @@ import flixel.util.FlxColor;
 
 class Ground extends FlxSprite
 {
-	public function new(x:Float = 0, y:Float = 0, height:Int = 0, width:Int = 0, color:FlxColor)
+	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
-		makeGraphic(width, height, color);
 		immovable = true;
 		solid = true;
 	}
