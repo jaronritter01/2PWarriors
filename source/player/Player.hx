@@ -25,6 +25,7 @@ class Player extends FlxSprite
 	public var down:Bool;
 	public var left:Bool;
 	public var right:Bool;
+	public var hit:Bool;
 
 	public function new(x:Float = 0, y:Float = 0, playerNum:Int = -1, color:FlxColor, state:PlayState)
 	{
@@ -55,6 +56,7 @@ class Player extends FlxSprite
 		down = false;
 		left = false;
 		right = false;
+		hit = false;
 
 		// cant move if stunned
 		if (!isStunned)
@@ -66,38 +68,54 @@ class Player extends FlxSprite
 				down = FlxG.keys.pressed.S;
 				left = FlxG.keys.pressed.A;
 				right = FlxG.keys.pressed.D;
+				hit = FlxG.keys.justPressed.X;
 			}
-			else
+
+			if (playerNum == 2)
 			{
-				// this handles player two's actions and movements
+				// this will handle player ones movement and actions
 				up = FlxG.keys.justPressed.I;
 				down = FlxG.keys.pressed.K;
 				left = FlxG.keys.pressed.J;
 				right = FlxG.keys.pressed.L;
 			}
+		}
 
-			// this is used to cancel out the players movements in the opposite direction
-			if (left && right)
-				left = right = false;
+		// this is used to cancel out the players movements in the opposite direction
+		if (left && right)
+		{
+			left = right = false;
+		}
 
-			if (left)
-			{
-				facing = LEFT;
-				velocity.x = -SPEED;
-			}
+		if (left && !hit)
+		{
+			facing = LEFT;
+			animation.play("walking");
+			velocity.x = -SPEED;
+		}
 
-			if (right)
-			{
-				facing = RIGHT;
-				velocity.x = SPEED;
-			}
+		if (right && !hit)
+		{
+			facing = RIGHT;
+			animation.play("walking");
+			velocity.x = SPEED;
+		}
 
-			if (up && !inAir)
-			{
-				jumpNoise.play();
-				velocity.y = -355;
-				inAir = true;
-			}
+		if (up && !inAir)
+		{
+			jumpNoise.play();
+			velocity.y = -355;
+			inAir = true;
+		}
+
+		if (!left && !right && !hit)
+		{
+			animation.play("idle");
+		}
+
+		if (inAir)
+		{
+			animation.play("jump");
 		}
 	}
 

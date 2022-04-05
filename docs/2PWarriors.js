@@ -887,7 +887,7 @@ ApplicationMain.main = function() {
 ApplicationMain.create = function(config) {
 	var app = new openfl_display_Application();
 	ManifestResources.init(config);
-	app.meta.h["build"] = "17";
+	app.meta.h["build"] = "19";
 	app.meta.h["company"] = "HaxeFlixel";
 	app.meta.h["file"] = "2PWarriors";
 	app.meta.h["name"] = "2PWarriors";
@@ -4260,7 +4260,7 @@ ManifestResources.init = function(config) {
 	openfl_text_Font.registerFont(_$_$ASSET_$_$OPENFL_$_$flixel_$fonts_$nokiafc22_$ttf);
 	openfl_text_Font.registerFont(_$_$ASSET_$_$OPENFL_$_$flixel_$fonts_$monsterrat_$ttf);
 	var bundle;
-	var data = "{\"name\":null,\"assets\":\"aoy4:pathy34:assets%2Fdata%2Fdata-goes-here.txty4:sizezy4:typey4:TEXTy2:idR1y7:preloadtgoR0y24:assets%2Fimages%2F1.webpR2i4290R3y5:IMAGER5R7R6tgoR0y32:assets%2Fimages%2Fbackground.pngR2i35554R3R8R5R9R6tgoR0y35:assets%2Fimages%2FbackgroundBig.pngR2i215265R3R8R5R10R6tgoR0y37:assets%2Fimages%2Fbluepixelknight.pngR2i2827R3R8R5R11R6tgoR0y44:assets%2Fimages%2Fbluepixelknightmidwalk.pngR2i2063R3R8R5R12R6tgoR0y44:assets%2Fimages%2Fbluepixelknightwalking.pngR2i2082R3R8R5R13R6tgoR0y34:assets%2Fimages%2Fground100x20.pngR2i858R3R8R5R14R6tgoR0y34:assets%2Fimages%2Fground200x20.pngR2i1233R3R8R5R15R6tgoR0y33:assets%2Fimages%2Fground80x20.pngR2i783R3R8R5R16R6tgoR0y29:assets%2Fimages%2Fgunbase.pngR2i192R3R8R5R17R6tgoR0y30:assets%2Fimages%2Fgunshoot.pngR2i213R3R8R5R18R6tgoR0y27:assets%2Fimages%2Flives.pngR2i984R3R8R5R19R6tgoR0y33:assets%2Fimages%2Fpixelnights.pngR2i25203R3R8R5R20R6tgoR0y36:assets%2Fimages%2Fredpixelknight.pngR2i2427R3R8R5R21R6tgoR0y43:assets%2Fimages%2Fredpixelknightmidwalk.pngR2i1698R3R8R5R22R6tgoR0y44:assets%2Fimages%2Fredpixelknightstanding.pngR2i2078R3R8R5R23R6tgoR2i9830444R3y5:SOUNDR5y33:assets%2Fmusic%2FBeepBox-Song.wavy9:pathGroupaR25hR6tgoR2i206460R3R24R5y27:assets%2Fsounds%2Fdeath.wavR26aR27hR6tgoR2i19046R3R24R5y30:assets%2Fsounds%2FHit_Hurt.wavR26aR28hR6tgoR2i15102R3R24R5y26:assets%2Fsounds%2FJump.wavR26aR29hR6tgoR2i20336R3R24R5y26:assets%2Fsounds%2Fshot.wavR26aR30hR6tgoR2i2114R3y5:MUSICR5y26:flixel%2Fsounds%2Fbeep.mp3R26aR32y26:flixel%2Fsounds%2Fbeep.ogghR6tgoR2i39706R3R31R5y28:flixel%2Fsounds%2Fflixel.mp3R26aR34y28:flixel%2Fsounds%2Fflixel.ogghR6tgoR2i5794R3R24R5R33R26aR32R33hgoR2i33629R3R24R5R35R26aR34R35hgoR2i15744R3y4:FONTy9:classNamey35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfR6tgoR2i29724R3R36R37y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfR6tgoR0y33:flixel%2Fimages%2Fui%2Fbutton.pngR2i519R3R8R5R42R6tgoR0y36:flixel%2Fimages%2Flogo%2Fdefault.pngR2i3280R3R8R5R43R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
+	var data = "{\"name\":null,\"assets\":\"aoy4:pathy34:assets%2Fdata%2Fdata-goes-here.txty4:sizezy4:typey4:TEXTy2:idR1y7:preloadtgoR0y35:assets%2Fimages%2FbackgroundBig.pngR2i215265R3y5:IMAGER5R7R6tgoR0y34:assets%2Fimages%2Fground100x20.pngR2i858R3R8R5R9R6tgoR0y34:assets%2Fimages%2Fground200x20.pngR2i1233R3R8R5R10R6tgoR0y33:assets%2Fimages%2Fground80x20.pngR2i783R3R8R5R11R6tgoR0y29:assets%2Fimages%2Fgunbase.pngR2i192R3R8R5R12R6tgoR0y30:assets%2Fimages%2Fgunshoot.pngR2i213R3R8R5R13R6tgoR0y70:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20hit%201.pngR2i360R3R8R5R14R6tgoR0y70:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20hit%202.pngR2i385R3R8R5R15R6tgoR0y70:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20hit%203.pngR2i510R3R8R5R16R6tgoR0y70:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20hit%204.pngR2i452R3R8R5R17R6tgoR0y70:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20hit%205.pngR2i377R3R8R5R18R6tgoR0y70:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20hit%206.pngR2i362R3R8R5R19R6tgoR0y75:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20stand%20pos1.pngR2i401R3R8R5R20R6tgoR0y75:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20stand%20pos2.pngR2i387R3R8R5R21R6tgoR0y75:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20stand%20pos3.pngR2i383R3R8R5R22R6tgoR0y75:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20stand%20pos4.pngR2i386R3R8R5R23R6tgoR0y75:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20stand%20pos5.pngR2i397R3R8R5R24R6tgoR0y71:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20walk%201.pngR2i382R3R8R5R25R6tgoR0y71:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20walk%202.pngR2i373R3R8R5R26R6tgoR0y71:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20walk%203.pngR2i379R3R8R5R27R6tgoR0y71:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20walk%204.pngR2i385R3R8R5R28R6tgoR0y71:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20walk%205.pngR2i408R3R8R5R29R6tgoR0y71:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20walk%206.pngR2i421R3R8R5R30R6tgoR0y71:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20walk%207.pngR2i421R3R8R5R31R6tgoR0y71:assets%2Fimages%2Fknight1stand%2F16x16%20knight%201%20v3%20walk%208.pngR2i402R3R8R5R32R6tgoR0y53:assets%2Fimages%2Fknight1stand%2Fknight1animation.pngR2i2933R3R8R5R33R6tgoR0y27:assets%2Fimages%2Flives.pngR2i984R3R8R5R34R6tgoR2i9830444R3y5:SOUNDR5y33:assets%2Fmusic%2FBeepBox-Song.wavy9:pathGroupaR36hR6tgoR2i206460R3R35R5y27:assets%2Fsounds%2Fdeath.wavR37aR38hR6tgoR2i19046R3R35R5y30:assets%2Fsounds%2FHit_Hurt.wavR37aR39hR6tgoR2i15102R3R35R5y26:assets%2Fsounds%2FJump.wavR37aR40hR6tgoR2i20336R3R35R5y26:assets%2Fsounds%2Fshot.wavR37aR41hR6tgoR2i2114R3y5:MUSICR5y26:flixel%2Fsounds%2Fbeep.mp3R37aR43y26:flixel%2Fsounds%2Fbeep.ogghR6tgoR2i39706R3R42R5y28:flixel%2Fsounds%2Fflixel.mp3R37aR45y28:flixel%2Fsounds%2Fflixel.ogghR6tgoR2i5794R3R35R5R44R37aR43R44hgoR2i33629R3R35R5R46R37aR45R46hgoR2i15744R3y4:FONTy9:classNamey35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfR6tgoR2i29724R3R47R48y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfR6tgoR0y33:flixel%2Fimages%2Fui%2Fbutton.pngR2i519R3R8R5R53R6tgoR0y36:flixel%2Fimages%2Flogo%2Fdefault.pngR2i3280R3R8R5R54R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
 	var manifest = lime_utils_AssetManifest.parse(data,ManifestResources.rootPath);
 	var library = lime_utils_AssetLibrary.fromManifest(manifest);
 	lime_utils_Assets.registerLibrary("default",library);
@@ -4607,13 +4607,22 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.add(this.background);
 		flixel_FlxG.mouse.set_visible(false);
 		this.player1 = new player_Player(42,20,1,-65536,this);
-		this.player1.loadGraphic("assets/images/bluepixelknightwalking.png",false,60,30);
-		this.player1._facingFlip.h[1] = { x : false, y : false};
-		this.player1._facingFlip.h[16] = { x : true, y : false};
+		this.player1.loadGraphic("assets/images/knight1stand/knight1animation.png",true,36,30);
+		this.player1._facingFlip.h[1] = { x : true, y : false};
+		this.player1._facingFlip.h[16] = { x : false, y : false};
+		this.player1.animation.add("idle",[0,1,2,3,4],12,true);
+		this.player1.animation.add("walking",[5,6,7,8,9,10,11,12],12,true);
+		this.player1.animation.add("jump",[5],12,false);
+		this.player1.animation.add("hit",[13,14,15,16,17,18],12,true);
 		this.player2 = new player_Player(flixel_FlxG.width - 55,20,2,-16776961,this);
-		this.player2.loadGraphic("assets/images/redpixelknightstanding.png",false,45,36);
-		this.player2._facingFlip.h[1] = { x : false, y : false};
-		this.player2._facingFlip.h[16] = { x : true, y : false};
+		this.player2.set_flipX(true);
+		this.player2.loadGraphic("assets/images/knight1stand/knight1animation.png",true,36,30);
+		this.player2._facingFlip.h[1] = { x : true, y : false};
+		this.player2._facingFlip.h[16] = { x : false, y : false};
+		this.player2.animation.add("idle",[0,1,2,3,4],12,true);
+		this.player2.animation.add("walking",[5,6,7,8,9,10,11,12],12,true);
+		this.player2.animation.add("jump",[5],12,false);
+		this.player2.animation.add("hit",[13,14,15,16,17,18],12,true);
 		this.gun = new pickups_Gun(flixel_FlxG.width / 2,0);
 		this.gun.loadGraphic("assets/images/gunbase.png",false,20,10);
 		this.createBullets();
@@ -4728,8 +4737,10 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 			tmp = false;
 		}
 		if(tmp) {
+			this.player1.animation.play("hit");
 			this.hitNoise.play();
 			this.player2.stun();
+			this.player2Timer.start(.7,$bind(this,this.unStun),1);
 			this.player2.velocity.set_x(250);
 			if(this.player2.getHasGun()) {
 				this.respawnGun();
@@ -4743,8 +4754,10 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 			tmp = false;
 		}
 		if(tmp) {
+			this.player2.animation.play("hit");
 			this.hitNoise.play();
 			this.player1.stun();
+			this.player1Timer.start(.7,$bind(this,this.unStun),1);
 			this.player1.velocity.set_x(250);
 			if(this.player1.getHasGun()) {
 				this.respawnGun();
@@ -4758,8 +4771,10 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 			tmp = false;
 		}
 		if(tmp) {
+			this.player1.animation.play("hit");
 			this.hitNoise.play();
 			this.player2.stun();
+			this.player2Timer.start(.7,$bind(this,this.unStun),1);
 			this.player2.velocity.set_x(-250);
 			if(this.player2.getHasGun()) {
 				this.respawnGun();
@@ -4773,8 +4788,10 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 			tmp = false;
 		}
 		if(tmp) {
+			this.player2.animation.play("hit");
 			this.hitNoise.play();
 			this.player1.stun();
+			this.player1Timer.start(.7,$bind(this,this.unStun),1);
 			this.player1.velocity.set_x(-250);
 			if(this.player1.getHasGun()) {
 				this.respawnGun();
@@ -64232,7 +64249,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 389417;
+	this.version = 130244;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -110198,6 +110215,7 @@ player_Player.prototype = $extend(flixel_FlxSprite.prototype,{
 		this.down = false;
 		this.left = false;
 		this.right = false;
+		this.hit = false;
 		if(!this.isStunned) {
 			if(this.playerNum == 1) {
 				var _this = flixel_FlxG.keys.justPressed;
@@ -110208,7 +110226,10 @@ player_Player.prototype = $extend(flixel_FlxSprite.prototype,{
 				this.left = _this.keyManager.checkStatusUnsafe(65,_this.status);
 				var _this = flixel_FlxG.keys.pressed;
 				this.right = _this.keyManager.checkStatusUnsafe(68,_this.status);
-			} else {
+				var _this = flixel_FlxG.keys.justPressed;
+				this.hit = _this.keyManager.checkStatusUnsafe(88,_this.status);
+			}
+			if(this.playerNum == 2) {
 				var _this = flixel_FlxG.keys.justPressed;
 				this.up = _this.keyManager.checkStatusUnsafe(73,_this.status);
 				var _this = flixel_FlxG.keys.pressed;
@@ -110218,22 +110239,30 @@ player_Player.prototype = $extend(flixel_FlxSprite.prototype,{
 				var _this = flixel_FlxG.keys.pressed;
 				this.right = _this.keyManager.checkStatusUnsafe(76,_this.status);
 			}
-			if(this.left && this.right) {
-				this.left = this.right = false;
-			}
-			if(this.left) {
-				this.set_facing(1);
-				this.velocity.set_x(-player_Player.SPEED);
-			}
-			if(this.right) {
-				this.set_facing(16);
-				this.velocity.set_x(player_Player.SPEED);
-			}
-			if(this.up && !this.inAir) {
-				this.jumpNoise.play();
-				this.velocity.set_y(-355);
-				this.inAir = true;
-			}
+		}
+		if(this.left && this.right) {
+			this.left = this.right = false;
+		}
+		if(this.left && !this.hit) {
+			this.set_facing(1);
+			this.animation.play("walking");
+			this.velocity.set_x(-player_Player.SPEED);
+		}
+		if(this.right && !this.hit) {
+			this.set_facing(16);
+			this.animation.play("walking");
+			this.velocity.set_x(player_Player.SPEED);
+		}
+		if(this.up && !this.inAir) {
+			this.jumpNoise.play();
+			this.velocity.set_y(-355);
+			this.inAir = true;
+		}
+		if(!this.left && !this.right && !this.hit) {
+			this.animation.play("idle");
+		}
+		if(this.inAir) {
+			this.animation.play("jump");
 		}
 	}
 	,setOnGround: function() {
@@ -110340,21 +110369,14 @@ openfl_display_DisplayObject.__tempStack = new lime_utils_ObjectPool(function() 
 	stack.set_length(0);
 });
 AssetPaths.data_goes_here__txt = "assets/data/data-goes-here.txt";
-AssetPaths.background__png = "assets/images/background.png";
 AssetPaths.backgroundBig__png = "assets/images/backgroundBig.png";
-AssetPaths.bluepixelknight__png = "assets/images/bluepixelknight.png";
-AssetPaths.bluepixelknightmidwalk__png = "assets/images/bluepixelknightmidwalk.png";
-AssetPaths.bluepixelknightwalking__png = "assets/images/bluepixelknightwalking.png";
 AssetPaths.ground100x20__png = "assets/images/ground100x20.png";
 AssetPaths.ground200x20__png = "assets/images/ground200x20.png";
 AssetPaths.ground80x20__png = "assets/images/ground80x20.png";
 AssetPaths.gunbase__png = "assets/images/gunbase.png";
 AssetPaths.gunshoot__png = "assets/images/gunshoot.png";
+AssetPaths.knight1animation__png = "assets/images/knight1stand/knight1animation.png";
 AssetPaths.lives__png = "assets/images/lives.png";
-AssetPaths.pixelnights__png = "assets/images/pixelnights.png";
-AssetPaths.redpixelknight__png = "assets/images/redpixelknight.png";
-AssetPaths.redpixelknightmidwalk__png = "assets/images/redpixelknightmidwalk.png";
-AssetPaths.redpixelknightstanding__png = "assets/images/redpixelknightstanding.png";
 AssetPaths.BeepBox_Song__wav = "assets/music/BeepBox-Song.wav";
 AssetPaths.death__wav = "assets/sounds/death.wav";
 AssetPaths.Hit_Hurt__wav = "assets/sounds/Hit_Hurt.wav";
