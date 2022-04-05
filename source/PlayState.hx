@@ -1,5 +1,6 @@
 package;
 
+import flixel.tweens.motion.QuadMotion;
 import flixel.util.FlxTimer;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
@@ -45,13 +46,25 @@ class PlayState extends FlxState
 		add(background);
 		FlxG.mouse.visible = false;
 		player1 = new Player(42, 20, 1, FlxColor.RED, this);
-		player1.loadGraphic(AssetPaths.bluepixelknightwalking__png, false, 60, 30);
-		player1.setFacingFlip(LEFT, false, false);
-		player1.setFacingFlip(RIGHT, true, false);
+		// player1.loadGraphic(AssetPaths.bluepixelknightwalking__png, false, 60, 30);
+		player1.loadGraphic(AssetPaths.knight1animation__png, true, 36, 30);
+		player1.setFacingFlip(LEFT, true, false);
+		player1.setFacingFlip(RIGHT, false, false);
+		player1.animation.add("idle", [0, 1, 2, 3, 4], 12, true);
+		player1.animation.add("walking", [5, 6, 7, 8, 9, 10, 11, 12], 12, true);
+		player1.animation.add("jump", [5], 12, false);
+		player1.animation.add("hit", [13, 14, 15, 16, 17, 18], 12, true);
+
 		player2 = new Player(FlxG.width - 55, 20, 2, FlxColor.BLUE, this);
-		player2.loadGraphic(AssetPaths.redpixelknightstanding__png, false, 45, 36);
-		player2.setFacingFlip(LEFT, false, false);
-		player2.setFacingFlip(RIGHT, true, false);
+		player2.flipX = true;
+		player2.loadGraphic(AssetPaths.knight1animation__png, true, 36, 30);
+		player2.setFacingFlip(LEFT, true, false);
+		player2.setFacingFlip(RIGHT, false, false);
+		player2.animation.add("idle", [0, 1, 2, 3, 4], 12, true);
+		player2.animation.add("walking", [5, 6, 7, 8, 9, 10, 11, 12], 12, true);
+		player2.animation.add("jump", [5], 12, false);
+		player2.animation.add("hit", [13, 14, 15, 16, 17, 18], 12, true);
+
 		gun = new Gun(FlxG.width / 2, 0);
 		gun.loadGraphic(AssetPaths.gunbase__png, false, 20, 10);
 		createBullets();
@@ -135,8 +148,12 @@ class PlayState extends FlxState
 				&& (player1.y - player2.y > -10 && player1.y - player2.y < 10)
 				&& FlxG.keys.justPressed.X)
 		{
+			player1.animation.play("hit");
 			hitNoise.play();
 			player2.stun();
+
+			player2Timer.start(.7, unStun, 1);
+
 			player2.velocity.x = 250;
 			if (player2.getHasGun())
 			{
@@ -151,8 +168,10 @@ class PlayState extends FlxState
 				&& (player2.y - player1.y > -10 && player2.y - player1.y < 10)
 				&& FlxG.keys.justPressed.M)
 		{
+			player2.animation.play("hit");
 			hitNoise.play();
 			player1.stun();
+			player1Timer.start(.7, unStun, 1);
 			player1.velocity.x = 250;
 			if (player1.getHasGun())
 			{
@@ -167,8 +186,10 @@ class PlayState extends FlxState
 				&& (player2.y - player1.y > -10 && player2.y - player1.y < 10)
 				&& FlxG.keys.justPressed.X)
 		{
+			player1.animation.play("hit");
 			hitNoise.play();
 			player2.stun();
+			player2Timer.start(.7, unStun, 1);
 			player2.velocity.x = -250;
 			if (player2.getHasGun())
 			{
@@ -183,8 +204,10 @@ class PlayState extends FlxState
 				&& (player1.y - player2.y > -10 && player1.y - player2.y < 10)
 				&& FlxG.keys.justPressed.M)
 		{
+			player2.animation.play("hit");
 			hitNoise.play();
 			player1.stun();
+			player1Timer.start(.7, unStun, 1);
 			player1.velocity.x = -250;
 			if (player1.getHasGun())
 			{
